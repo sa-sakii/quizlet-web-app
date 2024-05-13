@@ -1,0 +1,114 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: "Ubuntu", sans-serif;
+  }
+  body{
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    /* background-image: linear-gradient(purple,rgb(238, 48, 238)); */
+    background-color: #ffffff;
+    min-height: 100vh;
+    width: 100%;
+    background-color: #ffffff;
+  }
+
+  
+  .container {
+    display: flex;
+    justify-content: center;
+    color: white;
+    align-items: center;
+    flex-direction: column;
+    min-height: 400px;
+    width: 600px;
+    background-color: #282c34;
+    border-radius: 15px;
+    /* box-shadow: 2px 2px 10px 1px rgb(102, 3, 102); */
+    /* box-shadow: 2px 2px 10px 1px #333;   */
+    overflow: hidden;
+    padding: 10px;
+    position: relative;
+  }
+  .question{
+    margin-top:0px;
+    /* box-shadow: 0px 0px 10px 1px #a2a3a3; */
+    color: white;
+    border-radius: 5px;
+    padding:5px;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    font-family: "Ubuntu", sans-serif;
+    min-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .option-container{
+    display: flex;
+    flex-direction: column;
+    margin:6px 4px;    
+    width: 100%;
+    padding: 10px;
+  }
+  /* .option-container input{
+    visibility: hidden;    
+  } */
+  .option-btn{
+    /* box-shadow: 0px 0px 4px 1px rgb(128, 123, 123); */
+    padding: 5px;
+    border-radius: 3px;
+    border:none;
+    outline: none;
+    transition: 0.3s;
+    margin: 5px;
+    min-height: 30px;
+    background-color: #212529;
+    color: white;
+    font-family: "Ubuntu", sans-serif;
+    font-size: 18px;
+    
+  }
+  
+  .checked{
+    background-color: rgb(179, 83, 179);
+    color:white;
+    box-shadow: 3px 3px 4px 1px rgb(78, 69, 78);
+  }
+  .option-btn:hover{
+    background-color: rgb(212, 118, 212);
+    color:white;
+  }
+  #next-button{
+    padding:10px;
+    border:none;
+    background-color: purple;
+    background-color: rgb(40, 40, 248);
+    color:white;
+    border-radius: 5px;
+    /* box-shadow: 3px 3px 2px 1px rgb(127, 109, 109); */
+    font-weight: bold;
+    font-family: "Ubuntu", sans-serif;
+    transition: 0.2s;
+    width:100px;
+    position: absolute;
+    bottom: 15px;
+  }
+  #next-button:active{
+    box-shadow:none;    
+  }
+  .show-score{
+    position: absolute;
+    top:30%;
+    font-size: 40px;
+    text-align: center;  
+  }
+
+  .question-count{
+    width: 100px;
+    text-align: center;
+    color: rgb(28, 219, 11);
+  }
