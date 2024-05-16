@@ -112,3 +112,9 @@
     text-align: center;
     color: rgb(28, 219, 11);
   }
+
+  .option-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

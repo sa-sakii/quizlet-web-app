@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Questions from "../data/GeneralKnowledge";
 import QuizResult from "./QuizResult";
+import HomePage from "./HomePage";
 
 function shuffleArray(array) {
 
@@ -18,7 +19,7 @@ function addCorrectAnswerRandomly(questions) {
     questions.forEach(question => {
         // Get a random index within the range of incorrect_answers array length
         const randomIndex = Math.floor(Math.random() * (question.incorrect_answers.length + 1));
-        
+
         // Insert the value of correct_answer at the random index
         question.incorrect_answers.splice(randomIndex, 0, question.correct_answer);
 
@@ -31,11 +32,8 @@ function addCorrectAnswerRandomly(questions) {
 // Adding correct_answer randomly to incorrect_answers
 // const finalQuestions = addCorrectAnswerRandomly(Questions);
 
-// insert a number of questions
+// insert the number of questions
 const QuizQuestions = Questions.slice(0, 5);
-
-
-
 
 export default function Quiz() {
     const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -43,7 +41,9 @@ export default function Quiz() {
     const [clickedOption, setClickedOption] = useState(0);
     const [showResult, setShowResult] = useState(false);
     const [questionCount, setQuesionCount] = useState(1);
-    
+    const [quizGame, setQuizGame] = useState(false);
+    const [counter, setCounter] = useState(10);
+
     // changing to the next question
     const nextQuestion = () => {
         updateScore();
@@ -59,55 +59,78 @@ export default function Quiz() {
 
     // checking the correct answer and updating the score
     const updateScore = () => {
-        if (QuizQuestions[currentQuestion].incorrect_answers[clickedOption-1] === QuizQuestions[currentQuestion].correct_answer) {
+        if (QuizQuestions[currentQuestion].incorrect_answers[clickedOption - 1] === QuizQuestions[currentQuestion].correct_answer) {
             setScore(score + 1);
         }
     }
 
+    // reset all the state values and start quiz again
     const retryQuiz = () => {
-        setShowResult(false); 
-        setClickedOption(0); 
-        setCurrentQuestion(0); 
-        setScore(0); 
+        setShowResult(false);
+        setClickedOption(0);
+        setCurrentQuestion(0);
+        setScore(0);
         setQuesionCount(1);
     }
-    
+
+    // sending props to "start quiz" button
+    const startQuiz = () => {
+        setQuizGame(!quizGame);
+    }
+
+    // calling the nextquestion after the timer hit 10 secs 
+    const handleTimer = () => {
+        setTimeout(nextQuestion, 10000);
+    }
+
+
     return (
-        <h1>
-            <div className="container">
-                {showResult ? (
-                    <QuizResult score={score} totalScore={QuizQuestions.length} retryQuiz={retryQuiz} />
-                ) :
-                    (
-                        <>
-                            <div className="question-count">
-                                {`${questionCount} / ${QuizQuestions.length}`}
-                            </div>
-                
-                            <div className="question">
-                                <span id="question-txt">{QuizQuestions[currentQuestion].question}</span>
-                            </div>
-                            <div className="option-container">
-                                {QuizQuestions[currentQuestion].incorrect_answers.map((option, i) => {
-                                    return (
-                                        <button className={`option-btn ${clickedOption === i + 1 ? "checked" : null}`}
-                                            onClick={() => setClickedOption(i + 1)}
-                                            key={i}
-                                        >
-                                            {option}
-                                        </button>
-                                    )
-                                })}
-                            </div>
-                            <input
-                                type="button"
-                                value="Next"
-                                id="next-button"
-                                onClick={nextQuestion}
-                            />
-                        </>
-                    )}
-            </div>
-        </h1>
+        <div className="main-container">
+            {!quizGame ? (
+                <HomePage startQuiz={startQuiz} />
+            ) :
+                (
+                    <div className="container">
+                        {showResult ? (
+                            <QuizResult score={score} totalScore={QuizQuestions.length} retryQuiz={retryQuiz} />
+                        ) :
+                            (
+                                <>
+                                    <div>
+                                        
+                                    </div>
+                                    <div className="question-count">
+                                        {`${questionCount} / ${QuizQuestions.length}`}
+                                    </div>
+
+                                    <div className="question">
+                                        <span id="question-txt">{QuizQuestions[currentQuestion].question}</span>
+                                    </div>
+                                    <div className="option-container">
+                                        {QuizQuestions[currentQuestion].incorrect_answers.map((option, i) => {
+                                            return (
+                                                <div className="button-container" onLoad={handleTimer()}>
+                                                    <button className={`option-btn ${clickedOption === i + 1 ? "checked" : null}`}
+                                                        onClick={() => setClickedOption(i + 1)}
+                                                        key={i}
+                                                    >
+                                                        {option}
+                                                    </button>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                    <input
+                                        type="button"
+                                        value="Next"
+                                        id="next-button"
+                                        onClick={nextQuestion}
+                                    />
+                                </>
+                            )}
+                    </div>
+                )
+            }
+        </div>
     )
 }
