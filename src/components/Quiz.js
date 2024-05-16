@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Questions from "../data/GeneralKnowledge";
+// import Questions from "../data/GeneralKnowledge";
 import QuizResult from "./QuizResult";
 import HomePage from "./HomePage";
+// import CountDown from "./CountDown";
 
 function shuffleArray(array) {
 
@@ -33,9 +34,9 @@ function addCorrectAnswerRandomly(questions) {
 // const finalQuestions = addCorrectAnswerRandomly(Questions);
 
 // insert the number of questions
-const QuizQuestions = Questions.slice(0, 5);
 
 export default function Quiz() {
+    const [quiz, setQuiz] = useState([]); 
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [score, setScore] = useState(0);
     const [clickedOption, setClickedOption] = useState(0);
@@ -43,6 +44,14 @@ export default function Quiz() {
     const [questionCount, setQuesionCount] = useState(1);
     const [quizGame, setQuizGame] = useState(false);
     const [counter, setCounter] = useState(10);
+    
+    const QuizQuestions = quiz.slice(0, 5);
+    
+    useEffect(() => {
+        fetch('https://sheetdb.io/api/v1/75cxzjezzpkpu')
+            .then((response) => response.json())
+            .then((data) => setQuiz(data));
+    }, []);
 
     // changing to the next question
     const nextQuestion = () => {
@@ -96,9 +105,6 @@ export default function Quiz() {
                         ) :
                             (
                                 <>
-                                    <div>
-                                        
-                                    </div>
                                     <div className="question-count">
                                         {`${questionCount} / ${QuizQuestions.length}`}
                                     </div>
